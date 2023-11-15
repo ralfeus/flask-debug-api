@@ -2,9 +2,8 @@ import json
 
 from flask import (
     Blueprint, current_app, render_template, url_for, g,
-    request, after_this_request, make_response, redirect,
-    _request_ctx_stack, Markup)
-
+    request, after_this_request, make_response, redirect)
+from markupsafe import Markup
 try:
     from pygments import highlight
     from pygments.formatters import HtmlFormatter
@@ -39,7 +38,7 @@ def route(api_endpoint):
 @module.route('/browse', defaults={'path': '/'}, methods=METHODS)
 @module.route('/browse/<path:path>', methods=METHODS)
 def browse(path):
-    adapter = _request_ctx_stack.top.url_adapter
+    adapter = g.url_adapter
     g.methods = [method for method in METHODS if adapter.test(path, method)]
     if adapter.test(path, request.method):
         after_this_request(modify_response)
