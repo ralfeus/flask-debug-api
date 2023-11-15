@@ -1,6 +1,7 @@
 import jinja2
 
-from flask import current_app, url_for, Markup
+from flask import current_app, url_for
+from markupsafe import Markup
 from flask_debugtoolbar.panels import DebugPanel
 from werkzeug.routing import parse_rule
 
